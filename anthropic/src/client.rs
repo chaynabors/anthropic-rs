@@ -1,13 +1,13 @@
 use std::pin::Pin;
 
-use reqwest::header::{HeaderMap, ACCEPT, CONTENT_TYPE};
+use reqwest::header::{ACCEPT, CONTENT_TYPE, HeaderMap};
 use reqwest_eventsource::{Event, EventSource, RequestBuilderExt};
-use serde::de::DeserializeOwned;
 use serde::Serialize;
+use serde::de::DeserializeOwned;
 use tokio_stream::{Stream, StreamExt};
 
 use crate::config::AnthropicConfig;
-use crate::error::{map_deserialization_error, AnthropicError, WrappedError};
+use crate::error::{AnthropicError, WrappedError, map_deserialization_error};
 use crate::types::{
     CompleteRequest, CompleteResponse, CompleteResponseStream, MessagesRequest, MessagesResponse,
     MessagesResponseStream, StreamError,
@@ -18,7 +18,7 @@ use crate::{
 };
 
 /// The client to interact with the API.
-#[derive(Builder, Debug)]
+#[derive(Builder, Clone, Debug)]
 pub struct Client {
     /// The API key.
     pub api_key: String,
